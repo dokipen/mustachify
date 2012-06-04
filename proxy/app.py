@@ -4,9 +4,11 @@ import tornado.ioloop
 import tornado.web
 import tornado.wsgi
 
+import lxml.html
 import os
 import logging
 import logging.config
+import urlparse
 
 import settings
 
@@ -19,11 +21,18 @@ class ProxyHandler(tornado.web.RequestHandler):
 
     @tornado.web.asynchronous
     def get(self, url):
-        source = "%s&%s" % (url, self.request.query)
+        source = "%s?%s" % (url, self.request.query)
         logger.debug('fetching %s' % source)
 
         def fn(res):
-            self.write(res.buffer)
+            logger.debug('got data')
+            doc = lxml.html.document_fromstring(res.body)
+            doc.make_links_absolute(url)
+            for img in doc.xpath('//img'):
+                if img.src:
+                    img.src = 'https://i.embed.ly/?key=internal&url=%s' % img.src
+            self.write(lxml.html.tostring(doc))
+            self.finish()
 
         http_client = tornado.httpclient.AsyncHTTPClient()
         http_client.fetch(source, fn)
