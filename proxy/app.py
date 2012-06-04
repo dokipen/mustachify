@@ -29,8 +29,8 @@ class ProxyHandler(tornado.web.RequestHandler):
             doc = lxml.html.document_fromstring(res.body)
             doc.make_links_absolute(url)
             for img in doc.xpath('//img'):
-                if img.src:
-                    img.src = 'https://i.embed.ly/?key=internal&url=%s' % img.src
+                if img.attrib.get('src'):
+                    img.attrib['src'] = settings.IMG_PROXY % img.attrib['src']
             self.write(lxml.html.tostring(doc))
             self.finish()
 

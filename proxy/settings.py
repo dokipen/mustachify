@@ -1,3 +1,4 @@
+IMG_PROXY = 'https://i.embed.ly/?key=internal&url=%s'
 LOGGING_CONFIG = {
     'version': 1,
     'formatters': {
