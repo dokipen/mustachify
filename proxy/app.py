@@ -17,7 +17,7 @@ logger = logging.getLogger('mustachify.proxy')
 
 from optparse import OptionParser
 
-class ProxyHandler(tornado.web.RequestHandler):
+class HTTPProxyHandler(tornado.web.RequestHandler):
 
     @tornado.web.asynchronous
     def get(self, url):
@@ -37,9 +37,18 @@ class ProxyHandler(tornado.web.RequestHandler):
         http_client = tornado.httpclient.AsyncHTTPClient()
         http_client.fetch(source, fn)
 
+class ImageProxyHandler(tornado.web.RequestHandler):
+
+    @tornado.web.asynchronous
+    def get(self):
+        url = self.request.arguments.get('url', [None])[0]
+        if not url:
+            raise ValueError('fuck you')
+
 
 url_mapping = [
-    (r'/1/(?P<url>.+)', ProxyHandler),
+    (r'/1/mustachify', ImageProxyHandler),
+    (r'/1/(?P<url>.+)', HTTPProxyHandler),
 ]
 
 app_settings = {
