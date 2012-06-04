@@ -13,12 +13,15 @@ def find_faces(url):
     faces = json.loads(r.text)
     ret = []
     for photo in faces['photos']:
+        w, h = photo['width'], photo['height']
         for tag in photo['tags']:
-            ret.append({'mouth_center': (tag['mouth_center']['x'], tag['mouth_center']['y']),
+            ret.append({'mouth_center': (int(tag['mouth_center']['x'] * w / 100), 
+                                         int(tag['mouth_center']['y'] * h / 100)),
                         'roll': tag['roll'],
-                        'size': tag['width']})
+                        'size': int(tag['width'] * w / 100)})
     return ret
     
 
 if __name__ == '__main__':
     print find_faces(sys.argv[1])
+    
