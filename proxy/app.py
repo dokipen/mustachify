@@ -48,7 +48,7 @@ class ImageProxyHandler(tornado.web.RequestHandler):
             raise ValueError('fuck you')
 
         result = face.find_faces(url)
-        filename = stashify.add_stache(url, result['mouth_center'], result['roll'], result['size'])
+        filename = stachify.add_stache(url, result['mouth_center'], result['roll'], result['size'])
 
         self.write(filename)
         self.finish()
