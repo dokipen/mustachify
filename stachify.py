@@ -37,11 +37,9 @@ class CleanCut(object):
 		self.load()
 		#stache_face = cv2.add(self.image, floating_stache)
 		self.mustache = self.mustache.resize(self.image.size)
-		print self.mustache.size
-		print self.image.size
 		stache_face = PIL.ImageChops.add(self.image, self.mustache, 1, 50)
 
-		stacheout = 'stacheout.jpg'
+		stacheout = './static/{}.jpg'.format(abs(hash(self.url)))
 		stache_face.save(stacheout)
 		return stacheout
 
