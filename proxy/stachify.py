@@ -16,7 +16,7 @@ class CleanCut(object):
 		self.url = url
 		self.coordinates = coordinates
 		p = PIL.ImageFile.Parser()
-		raw = open('../mustaches/handlebar.jpg').read()
+		raw = open('mustaches/handlebar.jpg').read()
 		p.feed(raw)
 		self.mustache = p.close()
 
@@ -30,6 +30,7 @@ class CleanCut(object):
 		transform_matrix = [[1,.5], [.5,1], [1,1]]
 		self.load()
 		self.mustache = self.mustache.resize(self.image.size)
+		
 		print self.mustache.format, self.image.mode, self.mustache.size
 		print self.image.format, self.image.mode, self.image.size
 		stache_face = PIL.ImageChops.add(self.image, self.mustache, .5, 0)

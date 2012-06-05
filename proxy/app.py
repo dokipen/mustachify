@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import tornado.httpclient
 import tornado.httpserver
 import tornado.ioloop
@@ -12,6 +13,7 @@ import urlparse
 
 import settings
 import face
+import stachify
 
 logging.config.dictConfig(settings.LOGGING_CONFIG)
 logger = logging.getLogger('mustachify.proxy')
@@ -46,9 +48,12 @@ class ImageProxyHandler(tornado.web.RequestHandler):
         if not url:
             raise ValueError('fuck you')
 
-        result = face.find_faces(url)
-        self.write('ok')
-        self.finish()
+        logger.debug('mustaching %s' % url)
+
+        result = face.find_faces(url)[0]
+        filename = stachify.add_stache(url, result['mouth_center'], result['roll'], result['size'])
+
+        self.redirect("/%s" % filename)
 
 url_mapping = [
     (r'/1/mustachify', ImageProxyHandler),
