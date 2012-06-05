@@ -47,16 +47,13 @@ class ImageProxyHandler(tornado.web.RequestHandler):
             raise ValueError('fuck you')
 
         result = face.find_faces(url)
-        logger.debug('*********************')
-        logger.debug(result)
-        logger.debug('*********************')
         self.write('ok')
         self.finish()
-
 
 url_mapping = [
     (r'/1/mustachify', ImageProxyHandler),
     (r'/1/(?P<url>.+)', HTTPProxyHandler),
+    (r'/(.*)', tornado.web.StaticFileHandler, dict(path="static")),
 ]
 
 app_settings = {
