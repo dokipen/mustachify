@@ -12,6 +12,7 @@ import urlparse
 
 import settings
 import face
+import stachify
 
 logging.config.dictConfig(settings.LOGGING_CONFIG)
 logger = logging.getLogger('mustachify.proxy')
@@ -47,7 +48,9 @@ class ImageProxyHandler(tornado.web.RequestHandler):
             raise ValueError('fuck you')
 
         result = face.find_faces(url)
-        self.write('ok')
+        filename = stashify.add_stache(url, result['mouth_center'], result['roll'], result['size'])
+
+        self.write(filename)
         self.finish()
 
 url_mapping = [
