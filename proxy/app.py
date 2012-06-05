@@ -50,8 +50,8 @@ class ImageProxyHandler(tornado.web.RequestHandler):
 
         logger.debug('mustaching %s' % url)
 
-        result = face.find_faces(url)[0]
-        filename = stachify.add_stache(url, result['mouth_center'], result['roll'], result['size'])
+        result = face.find_faces(url)
+        filename = stachify.add_stache(url, result)
 
         self.redirect("/%s.jpg" % filename)
 
