@@ -1,1 +1,1 @@
-mustaches = ['mustaches/handlebar.jpg', 'mustaches/old-smokey.png']
+mustaches = ['./mustaches/handlebar.jpg', './mustaches/old-smokey.png']

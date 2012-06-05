@@ -4,7 +4,6 @@ Stachify your face
 """
 
 import random
-#import cv2
 import PIL.ImageFile
 import PIL.ImageChops
 import requests
@@ -17,31 +16,23 @@ class CleanCut(object):
 		self.url = url
 		self.coordinates = coordinates
 		p = PIL.ImageFile.Parser()
-		#raw = open(settings.mustaches[random.randint(0, len(settings.mustaches))]).read()
-		raw = open('./mustaches/handlebar.jpg').read()
+		raw = open('../mustaches/handlebar.jpg').read()
 		p.feed(raw)
 		self.mustache = p.close()
-		#self.mustache = cv2.imread(settings.mustaches[random.randomint(0,
-		#	len(settings.mustaches))])
 
 	def load(self):
 		raw_image = requests.get(self.url)
-		#self.image = cv2.imdecode(raw_image, 1)
 		p = PIL.ImageFile.Parser()
 		p.feed(raw_image.content)
 		self.image = p.close()
 
 	def place_stache(self):
 		transform_matrix = [[0,0], [1,1], [2,2]]
-		#floating_stache = cv2.warpAffine(self.mustache, transform_matrix, self.image.size)
 		self.load()
-		#stache_face = cv2.add(self.image, floating_stache)
 		self.mustache = self.mustache.resize(self.image.size)
-		print self.mustache.size
-		print self.image.size
 		stache_face = PIL.ImageChops.add(self.image, self.mustache, 1, 50)
 
-		stacheout = 'stacheout.jpg'
+		stacheout = '../static/{}.jpg'.format(abs(hash(self.url)))
 		stache_face.save(stacheout)
 		return stacheout
 
