@@ -47,11 +47,12 @@ class ImageProxyHandler(tornado.web.RequestHandler):
         if not url:
             raise ValueError('fuck you')
 
+        logger.debug('mustaching %s' % url)
+
         result = face.find_faces(url)[0]
         filename = stachify.add_stache(url, result['mouth_center'], result['roll'], result['size'])
 
-        self.write(filename)
-        self.finish()
+        self.redirect("/%s" % filename)
 
 url_mapping = [
     (r'/1/mustachify', ImageProxyHandler),
