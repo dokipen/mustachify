@@ -11,6 +11,7 @@ import logging.config
 import urlparse
 
 import settings
+import face
 
 logging.config.dictConfig(settings.LOGGING_CONFIG)
 logger = logging.getLogger('mustachify.proxy')
@@ -44,6 +45,13 @@ class ImageProxyHandler(tornado.web.RequestHandler):
         url = self.request.arguments.get('url', [None])[0]
         if not url:
             raise ValueError('fuck you')
+
+        result = face.find_faces(url)
+        logger.debug('*********************')
+        logger.debug(result)
+        logger.debug('*********************')
+        self.write('ok')
+        self.finish()
 
 
 url_mapping = [
