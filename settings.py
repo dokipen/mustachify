@@ -1,0 +1,1 @@
+mustaches = ['mustaches/handlebar.jpg']
