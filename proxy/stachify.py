@@ -34,10 +34,9 @@ class CleanCut(object):
 		self.image.paste(mustache, tl, mustache)
 
 	def save(self):
-		stacheout = 'static/{}.jpg'.format(abs(hash(self.url)))
-		#stache_face.save(self.image)
+		stacheout = 'static/{}.jpg'.format("%s1" % abs(hash(self.url)))
 		self.image.save(stacheout)
-		return abs(hash(self.url))
+		return "%s1" % abs(hash(self.url))
 
 
 def add_stache(url, faces):#mouth_center=None, roll=None, size=None):
