@@ -32,9 +32,9 @@ class CleanCut(object):
 		self.mustache = self.mustache.resize(self.image.size)
 		stache_face = PIL.ImageChops.add(self.image, self.mustache, 1, 50)
 
-		stacheout = '{}.jpg'.format(abs(hash(self.url)))
+		stacheout = 'static/{}.jpg'.format(abs(hash(self.url)))
 		stache_face.save(stacheout)
-		return stacheout
+		return abs(hash(self.url))
 
 def add_stache(url, mouth_center=None, roll=None, size=None):
     """

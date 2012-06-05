@@ -1,4 +1,4 @@
-IMG_PROXY = 'http://mustachify.embed.ly/1/mustachify?url=%s'
+IMG_PROXY = 'http://localhost:8000/1/mustachify?url=%s'
 LOGGING_CONFIG = {
     'version': 1,
     'formatters': {
