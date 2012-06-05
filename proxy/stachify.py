@@ -27,11 +27,12 @@ class CleanCut(object):
 		self.image = p.close()
 
 	def place_stache(self):
-		transform_matrix = [[0,0], [1,1], [2,2]]
+		transform_matrix = [[1,.5], [.5,1], [1,1]]
 		self.load()
 		self.mustache = self.mustache.resize(self.image.size)
-		stache_face = PIL.ImageChops.add(self.image, self.mustache, 1, 50)
-
+		print self.mustache.format, self.image.mode, self.mustache.size
+		print self.image.format, self.image.mode, self.image.size
+		stache_face = PIL.ImageChops.add(self.image, self.mustache, .5, 0)
 		stacheout = '../static/{}.jpg'.format(abs(hash(self.url)))
 		stache_face.save(stacheout)
 		return stacheout
